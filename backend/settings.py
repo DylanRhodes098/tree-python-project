@@ -5,22 +5,16 @@ import environ
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Load .env
 env = environ.Env()
 environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
 
-# Core security
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env.bool("DEBUG", default=False)
 ALLOWED_HOSTS = []
 
-# DATABASES: supports DB_URL or individual vars
-# Example DB_URL:
-#   mysql://USER:PASSWORD@HOST:PORT/NAME
-# django-environ will parse it and set ENGINE automatically.
 if env("DB_URL", default=None):
     DATABASES = {
-        "default": env.db("DB_URL")  # parses mysql://... string
+        "default": env.db("DB_URL")
     }
 else:
     DATABASES = {
@@ -45,4 +39,4 @@ INSTALLED_APPS = [
     "api",  # your app
 ]
 
-# (other usual Django settings…)
+
